@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Upgrade system, add Yocto Proyect basic dependencies and extras
 RUN apt-get update && apt-get -y upgrade && apt-get -y install kmod gawk wget git-core diffstat unzip texinfo \
 gcc-multilib build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils \
-iputils-ping libsdl1.2-dev xterm curl vim tzdata python-is-python3
+iputils-ping libsdl1.2-dev xterm curl vim tzdata python-is-python3 mc tmux screen
 
 # for tunctl (qemu)
 RUN apt-get -y install uml-utilities
