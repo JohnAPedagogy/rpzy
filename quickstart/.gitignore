@@ -1,0 +1,165 @@
+# Yocto Project .gitignore
+# Best practices for ignoring build artifacts and temporary files
+
+# Build directories (most common patterns)
+build/
+tmp/
+build-*/
+bitbake-builds/
+
+# BitBake specific
+bitbake.lock
+bitbake-cookerdaemon.log
+bitbake-cookerdaemon.log.*
+cookerdata.log
+cache/
+bitbake.lock
+
+# Downloaded sources
+downloads/
+sstate-cache/
+
+# Image artifacts
+deploy/images/
+deploy/licenses/
+deploy/rpm/
+deploy/deb/
+deploy/ipk/
+
+# Toolchain and SDK
+tmp-*/
+buildtools*/
+poky/buildtools*/
+
+# Configuration files that may contain local paths or secrets
+conf/local.conf
+conf/auto.conf
+conf/site.conf
+conf/bblayers.conf
+conf/templateconf.cfg
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# Logs
+*.log
+*.out
+
+# Build history
+buildhistory/
+
+# TMPDIR contents
+tmp/deploy/
+tmp/pkgdata/
+tmp/rootfs/
+tmp/work/
+
+# Shared state cache
+sstate-cache/
+sstate-mirror/
+
+# Downloads cache
+downloads/git2/
+downloads/source/
+
+# Machine specific
+meta-*/conf/machine/*.conf.bak
+meta-*/conf/distro/*.conf.bak
+
+# Development artifacts
+*.patch.*
+*.diff.*
+*~
+
+# QEMU artifacts
+*.qcow2
+*.raw
+*.vmdk
+
+# Cross-compilation toolchains
+tmp/sysroots/
+tmp/cross/
+tmp/stamps/
+tmp/pkgdata/
+
+# Image-specific ignores
+*.iso
+*.img
+*.manifest
+*.rootfs
+
+# Build output directories
+tmp-glibc/
+tmp-musl/
+tmp-eglibc/
+
+# Documentation build artifacts
+docs/_build/
+docs/build/
+
+# Test artifacts
+test-results/
+coverage/
+
+# CI/CD pipeline artifacts
+.gitlab-ci.yml.local
+.github/workflows/*.local
+
+# Environment files
+.env
+.venv/
+venv/
+
+# BitBake environment
+bitbake.env
+*.bbclass.deps
+
+# Package manager cache
+npm-cache/
+pip-cache/
+
+# Temporary working directories
+workspace/
+oe-local-files/
+
+# Large binary artifacts
+*.tar.gz
+*.tar.bz2
+*.zip
+*.7z
+*.xz
+
+# Debug symbols
+*.debug
+*.dbg
+
+# Performance profiling
+*.prof
+*.profile
+
+# Build statistics
+buildstats/
+buildstats-*/
+
+# Cache files
+*.cache
+
+# Lock files
+*.lock
+*.lck
