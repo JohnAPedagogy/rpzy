@@ -1,0 +1,17 @@
+# run with sudo netplan apply
+# save in /etc/netplan/01-netplan-yml.yaml
+network:
+  version: 2
+  ethernets:
+    enp0s3:
+      dhcp4: no
+      addresses:
+        - 172.16.100.97/24
+      routes:
+        - to: default
+          via: 172.16.100.254
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 172.16.100.254
+          - 1.1.1.1
