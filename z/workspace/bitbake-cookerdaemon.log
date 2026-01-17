@@ -1,0 +1,80 @@
+158018 18:11:04.543472 --- Starting bitbake server pid 158018 at 2026-01-17 18:11:04.543439 ---
+Traceback (most recent call last):
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/bin/bitbake-server", line 54, in <module>
+    bb.server.process.execServer(lockfd, readypipeinfd, lockname, sockname, timeout, xmlrpcinterface, profile)
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/lib/bb/server/process.py", line 667, in execServer
+    sock.bind(os.path.basename(sockname))
+OSError: [Errno 95] Operation not supported
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name='/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/bitbake-cookerdaemon.log' mode='a+' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 mode='w' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed <socket.socket fd=6, family=1, type=1, proto=0>
+158050 18:11:07.532441 --- Starting bitbake server pid 158050 at 2026-01-17 18:11:07.532396 ---
+Traceback (most recent call last):
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/bin/bitbake-server", line 54, in <module>
+    bb.server.process.execServer(lockfd, readypipeinfd, lockname, sockname, timeout, xmlrpcinterface, profile)
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/lib/bb/server/process.py", line 667, in execServer
+    sock.bind(os.path.basename(sockname))
+OSError: [Errno 95] Operation not supported
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name='/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/bitbake-cookerdaemon.log' mode='a+' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 mode='w' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed <socket.socket fd=6, family=1, type=1, proto=0>
+158103 18:11:11.908451 --- Starting bitbake server pid 158103 at 2026-01-17 18:11:11.908400 ---
+Traceback (most recent call last):
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/bin/bitbake-server", line 54, in <module>
+    bb.server.process.execServer(lockfd, readypipeinfd, lockname, sockname, timeout, xmlrpcinterface, profile)
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/lib/bb/server/process.py", line 667, in execServer
+    sock.bind(os.path.basename(sockname))
+OSError: [Errno 95] Operation not supported
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name='/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/bitbake-cookerdaemon.log' mode='a+' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 mode='w' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed <socket.socket fd=6, family=1, type=1, proto=0>
+158172 18:11:16.228762 --- Starting bitbake server pid 158172 at 2026-01-17 18:11:16.228719 ---
+Traceback (most recent call last):
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/bin/bitbake-server", line 54, in <module>
+    bb.server.process.execServer(lockfd, readypipeinfd, lockname, sockname, timeout, xmlrpcinterface, profile)
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/lib/bb/server/process.py", line 667, in execServer
+    sock.bind(os.path.basename(sockname))
+OSError: [Errno 95] Operation not supported
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name='/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/bitbake-cookerdaemon.log' mode='a+' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 mode='w' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed <socket.socket fd=6, family=1, type=1, proto=0>
+158310 18:11:25.512839 --- Starting bitbake server pid 158310 at 2026-01-17 18:11:25.512777 ---
+Traceback (most recent call last):
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/bin/bitbake-server", line 54, in <module>
+    bb.server.process.execServer(lockfd, readypipeinfd, lockname, sockname, timeout, xmlrpcinterface, profile)
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/lib/bb/server/process.py", line 667, in execServer
+    sock.bind(os.path.basename(sockname))
+OSError: [Errno 95] Operation not supported
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name='/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/bitbake-cookerdaemon.log' mode='a+' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 mode='w' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed <socket.socket fd=6, family=1, type=1, proto=0>
+158444 18:11:35.803259 --- Starting bitbake server pid 158444 at 2026-01-17 18:11:35.803229 ---
+Traceback (most recent call last):
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/bin/bitbake-server", line 54, in <module>
+    bb.server.process.execServer(lockfd, readypipeinfd, lockname, sockname, timeout, xmlrpcinterface, profile)
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/lib/bb/server/process.py", line 667, in execServer
+    sock.bind(os.path.basename(sockname))
+OSError: [Errno 95] Operation not supported
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name='/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/bitbake-cookerdaemon.log' mode='a+' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 mode='w' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed <socket.socket fd=6, family=1, type=1, proto=0>
+158587 18:11:45.432034 --- Starting bitbake server pid 158587 at 2026-01-17 18:11:45.432002 ---
+Traceback (most recent call last):
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/bin/bitbake-server", line 54, in <module>
+    bb.server.process.execServer(lockfd, readypipeinfd, lockname, sockname, timeout, xmlrpcinterface, profile)
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/lib/bb/server/process.py", line 667, in execServer
+    sock.bind(os.path.basename(sockname))
+OSError: [Errno 95] Operation not supported
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name='/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/bitbake-cookerdaemon.log' mode='a+' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 mode='w' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed <socket.socket fd=6, family=1, type=1, proto=0>
+158724 18:11:52.864707 --- Starting bitbake server pid 158724 at 2026-01-17 18:11:52.864675 ---
+Traceback (most recent call last):
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/bin/bitbake-server", line 54, in <module>
+    bb.server.process.execServer(lockfd, readypipeinfd, lockname, sockname, timeout, xmlrpcinterface, profile)
+  File "/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/sources/poky/bitbake/lib/bb/server/process.py", line 667, in execServer
+    sock.bind(os.path.basename(sockname))
+OSError: [Errno 95] Operation not supported
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name='/mnt/c/work/Favorites/artefacts/Repos/rpzy/z/workspace/bitbake-cookerdaemon.log' mode='a+' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 mode='w' encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed <socket.socket fd=6, family=1, type=1, proto=0>

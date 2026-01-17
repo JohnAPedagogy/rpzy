@@ -108,3 +108,6 @@ Yocto's Shared State (sstate) cache is what makes it so powerful. It caches the 
 
 ## Step 5: Continuing the Build
 Command: `export PATH=/opt/yocto/workspace/rpz/bin:$PATH && bitbake core-image-minimal`
+
+# Building for Pynq-Z2
+Command: `MACHINE=qemu-zynq7 bitbake core-image-minimal`
