@@ -111,3 +111,274 @@ Command: `export PATH=/opt/yocto/workspace/rpz/bin:$PATH && bitbake core-image-m
 
 # Building for Pynq-Z2
 Command: `MACHINE=qemu-zynq7 bitbake core-image-minimal`
+
+## PYNQ-Z2 Board Configuration Analysis
+
+### Current Configuration State
+
+**Machine Configuration:**
+- **Current MACHINE:** `zynq-generic` (xzt/conf/local.conf:39)
+- **Target SoC:** XC7Z020 (Zynq-7000 series, same as PYNQ-Z2)
+- **Active Layers:**
+  - meta-xilinx-core (generic Zynq support)
+  - meta-xilinx-bsp (Xilinx BSP support)
+  - Missing: meta-xilinx-vendor (contains Zynq-7000 board configs)
+
+**Key Finding:** PYNQ-Z2 is NOT officially supported in meta-xilinx. AMD's official machine configuration support lists only ZC702 and ZC706 for Zynq-7000, not PYNQ boards.
+
+### Option 1: Create Custom PYNQ-Z2 Machine Configuration
+
+**Overview:** Create a custom machine configuration based on existing Zynq-7000 board configurations (e.g., zybo-zynq7.conf) and customize for PYNQ-Z2.
+
+**Implementation Steps:**
+
+1. **Add meta-xilinx-vendor layer** to `xzt/conf/bblayers.conf`:
+   ```conf
+   BBLAYERS ?= " \
+     ${RPZY_WORKSPACE}/sources/poky/meta \
+     ${RPZY_WORKSPACE}/sources/poky/meta-poky \
+     ${RPZY_WORKSPACE}/sources/poky/meta-yocto-bsp \
+     ${RPZY_WORKSPACE}/sources/meta-openembedded/meta-oe \
+     ${RPZY_WORKSPACE}/sources/meta-arm/meta-arm \
+     ${RPZY_WORKSPACE}/sources/meta-arm/meta-arm-toolchain \
+     ${RPZY_WORKSPACE}/sources/meta-xilinx/meta-xilinx-core \
+     ${RPZY_WORKSPACE}/sources/meta-xilinx/meta-xilinx-bsp \
+     ${RPZY_WORKSPACE}/sources/meta-xilinx/meta-xilinx-vendor \
+   "
+   ```
+
+2. **Create custom machine configuration** at `sources/meta-xilinx/meta-xilinx-vendor/conf/machine/pynq-zynq7.conf`:
+   ```conf
+   #@TYPE: Machine
+   #@NAME: pynq-zynq7
+   #@DESCRIPTION: Machine support for PYNQ-Z2 (XC7Z020 CLG484)
+
+   require conf/machine/zynq-generic.conf
+
+   SPL_BINARY ?= "spl/boot.bin"
+   UBOOT_ELF = "u-boot"
+
+   EXTRA_IMAGEDEPENDS += " \
+       u-boot-xlnx-uenv \
+       "
+
+   # Device tree for PYNQ-Z2 - needs to be verified/compiled
+   KERNEL_DEVICETREE = "zynq-pynqz2.dtb"
+
+   IMAGE_BOOT_FILES += " \
+       boot.bin \
+       uEnv.txt \
+       "
+   ```
+
+3. **Update local.conf** to change MACHINE:
+   ```conf
+   MACHINE ??= "pynq-zynq7"
+   ```
+
+4. **Verify device tree availability:**
+   - Check if `zynq-pynqz2.dts` exists in kernel sources or meta-xilinx
+   - If not, compile from PYNQ board files or create custom DTB
+
+5. **Build the image:**
+   ```bash
+   source poky/oe-init-build-env
+   bitbake core-image-minimal
+   ```
+
+**Prerequisites:**
+- PYNQ-Z2 device tree source (.dts) or pre-compiled DTB
+- U-boot configuration for PYNQ-Z2 boot sequence
+- Hardware design files (.xsa/.hdf) if using custom FPGA design
+
+**Advantages:**
+- Simple, direct approach
+- Follows existing Zynq-7000 board patterns
+- Quick to implement if DTB is available
+
+**Disadvantages:**
+- Requires manual device tree management
+- No official AMD support
+- May need ongoing maintenance for updates
+
+---
+
+### Option 2: System Device Tree (SDT) Workflow (Official AMD Recommendation)
+
+**Overview:** Use AMD's official System Device Tree workflow to generate machine configuration from hardware description. This is AMD's recommended approach for custom boards.
+
+**Implementation Steps:**
+
+1. **Initialize gen-machine-conf submodule:**
+   ```bash
+   cd sources/meta-xilinx
+   git submodule update --init gen-machine-conf
+   ```
+   (Currently the directory is empty - needs initialization)
+
+2. **Install required tools:**
+   ```bash
+   # Install SDTGen (System Device Tree Generator)
+   git clone https://github.com/Xilinx/system-device-tree-xlnx.git
+   cd system-device-tree-xlnx
+   pip install -e .
+   
+   # Install lopper (device tree manipulation tool)
+   git clone https://github.com/devicetree-org/lopper.git
+   cd lopper
+   pip install -e .
+   ```
+
+3. **Create System Device Tree for PYNQ-Z2:**
+   - Obtain hardware design file (.xsa) from Vivado for PYNQ-Z2
+   - Generate system device tree using SDTGen:
+     ```bash
+     sdtgen --xsa pynq-z2.xsa --output sdt.dts
+     ```
+
+4. **Generate machine configuration:**
+   ```bash
+   cd gen-machine-conf
+   python gen-machine-conf.py --sdt ../sdt.dts --output ../meta-xilinx-vendor/conf/machine/pynq-zynq7.conf
+   ```
+
+5. **Create custom layer** for generated configuration:
+   ```bash
+   bitbake-layers create-layer meta-pynq-z2
+   bitbake-layers add-layer meta-pynq-z2
+   # Move generated config to meta-pynq-z2/conf/machine/
+   ```
+
+6. **Update local.conf:**
+   ```conf
+   MACHINE ??= "pynq-zynq7"
+   ```
+
+7. **Build the image:**
+   ```bash
+   source poky/oe-init-build-env
+   bitbake core-image-minimal
+   ```
+
+**Prerequisites:**
+- Vivado hardware design (.xsa) for PYNQ-Z2
+- SDTGen and lopper tools installed
+- Python environment for tool execution
+
+**Advantages:**
+- Official AMD-recommended workflow
+- Automatic configuration generation
+- Proper integration with Xilinx toolchain
+- Future-proof approach
+
+**Disadvantages:**
+- More complex setup
+- Requires hardware design files
+- Steeper learning curve
+- Longer initial setup time
+
+---
+
+### Option 3: PYNQ meta-pynq Layer Integration
+
+**Overview:** Integrate the PYNQ project's official meta-pynq layer from the PYNQ repository into your Yocto build.
+
+**Implementation Steps:**
+
+1. **Clone PYNQ repository:**
+   ```bash
+   cd sources
+   git clone https://github.com/Xilinx/PYNQ.git
+   cd PYNQ
+   # Checkout appropriate version (e.g., image_v2.7 or master)
+   git checkout image_v2.7
+   ```
+
+2. **Add meta-pynq layer** to `xzt/conf/bblayers.conf`:
+   ```conf
+   BBLAYERS ?= " \
+     ${RPZY_WORKSPACE}/sources/poky/meta \
+     ${RPZY_WORKSPACE}/sources/poky/meta-poky \
+     ${RPZY_WORKSPACE}/sources/poky/meta-yocto-bsp \
+     ${RPZY_WORKSPACE}/sources/meta-openembedded/meta-oe \
+     ${RPZY_WORKSPACE}/sources/meta-arm/meta-arm \
+     ${RPZY_WORKSPACE}/sources/meta-arm/meta-arm-toolchain \
+     ${RPZY_WORKSPACE}/sources/meta-xilinx/meta-xilinx-core \
+     ${RPZY_WORKSPACE}/sources/meta-xilinx/meta-xilinx-bsp \
+     ${RPZY_WORKSPACE}/sources/PYNQ/sdbuild/boot/meta-pynq \
+   "
+   ```
+
+3. **Review meta-pynq machine configurations:**
+   ```bash
+   ls sources/PYNQ/sdbuild/boot/meta-pynq/conf/machine/
+   # Available configs: pynq-z2.conf, pynq-z1.conf, etc.
+   ```
+
+4. **Update local.conf:**
+   ```conf
+   MACHINE ??= "pynq-z2"
+   ```
+
+5. **Handle layer dependencies:**
+   - meta-pynq may have dependencies on additional layers
+   - Check meta-pynq README for required layers
+   - May need to add meta-python, meta-networking from meta-openembedded
+
+6. **Address potential conflicts:**
+   - PYNQ layer may expect PYNQ-specific build environment
+   - May need to adjust DISTRO settings
+   - Verify compatibility with Poky version
+
+7. **Build the image:**
+   ```bash
+   source poky/oe-init-build-env
+   bitbake core-image-minimal
+   # Or use PYNQ-specific image:
+   bitbake pynq-image
+   ```
+
+**Prerequisites:**
+- Review PYNQ meta-pynq layer documentation
+- Resolve layer compatibility issues
+- Potentially adjust DISTRO configuration
+
+**Advantages:**
+- Official PYNQ layer
+- Board-specific optimizations
+- Includes PYNQ-specific software stack (Python, Jupyter, etc.)
+- Active community support
+
+**Disadvantages:**
+- May not be designed for standalone Yocto builds
+- Possible compatibility issues with current Poky version
+- May bring unnecessary PYNQ dependencies
+- Less control over configuration
+
+---
+
+### Summary Comparison
+
+| Aspect | Option 1: Custom Config | Option 2: SDT Workflow | Option 3: meta-pynq |
+|--------|------------------------|----------------------|-------------------|
+| Complexity | Low | High | Medium |
+| Official Support | None | AMD Official | PYNQ Official |
+| Setup Time | Fast | Slow | Medium |
+| Maintenance | Manual | Automated | Community |
+| Hardware Files Required | DTB only | .xsa design file | None |
+| Best For | Quick start, custom designs | Production, custom boards | Full PYNQ features |
+
+### Recommended Path
+
+**For quick PYNQ-Z2 support:** Use Option 1 if you have the device tree file
+
+**For production/custom boards:** Use Option 2 (SDT workflow) for proper AMD toolchain integration
+
+**For full PYNQ experience:** Use Option 3 to get Python/Jupyter stack and PYNQ-specific features
+
+### Next Steps Required
+
+1. Determine if PYNQ-Z2 device tree source is available
+2. Check PYNQ repository for meta-pynq layer compatibility
+3. Decide which option to pursue based on project requirements
+4. Implement chosen option and test build
