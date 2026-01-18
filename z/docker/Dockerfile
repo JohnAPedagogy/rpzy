@@ -11,6 +11,8 @@ RUN apt-get update && apt-get -y upgrade && apt-get -y install kmod gawk wget gi
 gcc-multilib build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils \
 iputils-ping libsdl1.2-dev xterm curl vim tzdata python-is-python3 mc tmux screen  lz4c pzstd unzstd zstd \
 
+# for Xilinx tools (legacy dependency)
+RUN ln -s /lib/x86_64-linux-gnu/libtinfo.so.6 /lib/x86_64-linux-gnu/libtinfo.so.5
 
 # for tunctl (qemu)
 RUN apt-get -y install uml-utilities
